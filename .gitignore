@@ -465,3 +465,4 @@ FodyWeavers.xsd
 */.ipynb_checkpoints/*
 profile_default/
 ipython_config.py
+*/__pycache__/
