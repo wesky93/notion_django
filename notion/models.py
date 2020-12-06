@@ -1,4 +1,5 @@
 import uuid
+from functools import partial
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -13,10 +14,10 @@ class Page(models.Model):
     objects = InheritanceManager()
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    icon = models.CharField(max_length=200)
+    icon = models.CharField(max_length=200,null=True,blank=True)
 
-    title = models.TextField()
-    parent = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
+    title = models.TextField(default='Untitled')
+    parent = models.ForeignKey('self', null=True,blank=True, on_delete=models.CASCADE)
     # type = models.CharField(max_length=50, choices=PageType.choices)
     wide = models.BooleanField(default=False)
 
@@ -46,7 +47,8 @@ class Block(models.Model):
     type = models.CharField(max_length=50, choices=BlockType.choices)
     data = models.JSONField(null=True)
     page = models.ForeignKey(LayoutPage, on_delete=models.CASCADE)
-    column = models.IntegerField(null=False)
+    col = models.IntegerField(default=1,null=False)
+    row = models.IntegerField(default=1)
 
 
 class Collection(models.Model):
@@ -65,17 +67,17 @@ class CollectionView(models.Model):
 
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    type = models.CharField(max_length=50, choices=ViewType.choices)
-    data = models.JSONField(default={})
+    type = models.CharField(max_length=50, choices=ViewType.choices,default=ViewType.TABLE.value)
+    data = models.JSONField(default=dict)
 
 
 class CollectionProperty(models.Model):
     page = models.ForeignKey(Collection, on_delete=models.CASCADE)
-    nmae = models.CharField(max_length=200)
-    data = models.JSONField(default={})
+    name = models.CharField(max_length=200,default='Column',blank=True)
+    data = models.JSONField(default=dict)
 
 
-class PageProperty():
+class PageProperty(models.Model):
     type = models.ForeignKey(CollectionProperty, on_delete=models.CASCADE)
     page = models.ForeignKey(LayoutPage, on_delete=models.CASCADE)
-    data = models.JSONField(default={"value": ''})
+    data = models.JSONField(default=partial(dict,value=''))

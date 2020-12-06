@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'debug_toolbar',
 
     'base',
     'notion',
@@ -54,6 +55,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
 
 ROOT_URLCONF = 'notion_django.urls'
@@ -114,6 +117,16 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 
 }
+PASSWORD_MIN_LENGTH = 8
+PASSWORD_MAX_LENGTH = 100
+PASSWORD_COMPLEXITY = {  # You can omit any or all of these for no limit for that particular set
+    "UPPER": 0,  # Uppercase
+    "LOWER": 0,  # Lowercase
+    "LETTERS": 1,  # Either uppercase or lowercase letters
+    "DIGITS": 1,  # Digits
+    "SPECIAL": 1,  # Not alphanumeric, space or punctuation character
+    "WORDS": 0,  # Words (alphanumeric sequences separated by a whitespace or punctuation character)
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -132,3 +145,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
