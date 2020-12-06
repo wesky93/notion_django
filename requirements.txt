@@ -1,0 +1,4 @@
+django
+djangorestframework
+django-passwords
+django-model-utils
