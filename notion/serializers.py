@@ -18,9 +18,9 @@ class BlockSerializer(serializers.ModelSerializer):
 class LayoutPageSerializer(serializers.ModelSerializer):
     class Meta:
         model = LayoutPage
-        fields = ['id', 'title', 'icon', 'block_set']
+        fields = ['id', 'title', 'icon', 'blocks']
 
-    block_set = BlockSerializer(many=True, read_only=True)
+    blocks = BlockSerializer(many=True, read_only=True)
 
 
 class CollectionPageSerializer(serializers.ModelSerializer):

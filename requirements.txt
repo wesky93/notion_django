@@ -3,3 +3,4 @@ djangorestframework
 django-passwords
 django-model-utils
 django-debug-toolbar
+drf-yasg

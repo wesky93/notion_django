@@ -46,7 +46,7 @@ class Block(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     type = models.CharField(max_length=50, choices=BlockType.choices)
     data = models.JSONField(null=True)
-    page = models.ForeignKey(LayoutPage, on_delete=models.CASCADE)
+    page = models.ForeignKey(LayoutPage, on_delete=models.CASCADE,related_name='blocks',related_query_name='block')
     col = models.IntegerField(default=1,null=False)
     row = models.IntegerField(default=1)
 
